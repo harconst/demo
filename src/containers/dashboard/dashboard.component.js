@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
 
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import compose from 'recompose/compose';
-import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Tooltip from 'material-ui/Tooltip';
 import Table, {
@@ -14,6 +15,8 @@ import Table, {
   TableRow,
   TableSortLabel
 } from 'material-ui/Table';
+
+import LayoutLoader from '../../layouts/components/layout-loader/layout-loader.component';
 
 import { fetchUsers, handleRequestSort } from '../../actions/user.actions';
 
@@ -47,58 +50,70 @@ class Dashboard extends Component {
               className={classes.widget}
             >
               <Paper className={classes['widget-content']}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {columnData.map(column => {
-                        return (
-                          <TableCell
-                            className={classes['table-cell']}
-                            key={column.id}
-                            numeric={column.numeric}
-                            padding={column.disablePadding ? 'none' : 'default'}
-                            sortDirection={
-                              orderBy === column.id ? order : false
-                            }
-                          >
-                            <Tooltip
-                              title="Sort"
-                              placement={
-                                column.numeric ? 'bottom-end' : 'bottom-start'
+                {!isFetching &&
+                  users.length && (
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          {columnData.map(column => (
+                            <TableCell
+                              className={classes['table-cell']}
+                              key={column.id}
+                              numeric={column.numeric}
+                              padding={
+                                column.disablePadding ? 'none' : 'default'
                               }
-                              enterDelay={300}
+                              sortDirection={
+                                orderBy === column.id ? order : false
+                              }
                             >
-                              <TableSortLabel
-                                active={orderBy === column.id}
-                                direction={order}
-                                onClick={() =>
-                                  this.props.handleRequestSort(column.id)
+                              <Tooltip
+                                title="Sort"
+                                placement={
+                                  column.numeric ? 'bottom-end' : 'bottom-start'
                                 }
+                                enterDelay={300}
                               >
-                                {column.label}
-                              </TableSortLabel>
-                            </Tooltip>
-                          </TableCell>
-                        );
-                      }, this)}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {users.map(user => (
-                      <TableRow key={user.id} hover>
-                        <TableCell className={classes['table-cell']}>
-                          {user.name}
-                        </TableCell>
-                        <TableCell className={classes['table-cell']} numeric>
-                          {user.posts}
-                        </TableCell>
-                        <TableCell className={classes['table-cell']} numeric>
-                          {user.ratio}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                                <TableSortLabel
+                                  active={orderBy === column.id}
+                                  direction={order}
+                                  onClick={() =>
+                                    this.props.handleRequestSort(column.id)
+                                  }
+                                >
+                                  {column.label}
+                                </TableSortLabel>
+                              </Tooltip>
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {users.map(user => (
+                          <TableRow key={user.id} hover>
+                            <TableCell className={classes['table-cell']}>
+                              <Link to={`/details/${user.id}`}>
+                                {user.name}
+                              </Link>
+                            </TableCell>
+                            <TableCell
+                              className={classes['table-cell']}
+                              numeric
+                            >
+                              {user.posts}
+                            </TableCell>
+                            <TableCell
+                              className={classes['table-cell']}
+                              numeric
+                            >
+                              {user.ratio}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                {isFetching && <LayoutLoader />}
               </Paper>
             </Grid>
           </Grid>
@@ -122,8 +137,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  // withRouter,
-  // withWidth(),
   withStyles(styles, { withTheme: true }),
   connect(mapStateToProps, {
     fetchUsers,

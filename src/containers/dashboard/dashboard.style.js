@@ -11,7 +11,9 @@ const styles = theme => ({
   },
   'widget-content': {
     flex: '1 1 100%',
-    display: 'flex'
+    display: 'flex',
+    minHeight: 300,
+    justifyContent: 'center'
   },
   'table-cell': {
     padding: '4px 24px 4px 24px'

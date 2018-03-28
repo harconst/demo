@@ -47,8 +47,12 @@
     "max-len": [
       "error",
       {
-        "code": 120
+        "code": 160
       }
-    ]
+    ],
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
   }
 }

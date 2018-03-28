@@ -37,7 +37,7 @@ export default ({ childProps }) => (
       layout={SimpleLayout}
     />
     <AppRoute
-      path="/theming"
+      path="/details/:number"
       exact
       component={AsyncDetails}
       props={childProps}
