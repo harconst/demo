@@ -1,20 +1,46 @@
+const menuWidth = 300;
+
 const styles = theme => ({
-  'dashboard-page-wrapper': {
-    padding: 16,
-    minHeight: '100%',
+  root: {
+    width: '100%',
+    height: '100%',
+    marginTop: 0,
+    zIndex: 1,
+    overflow: 'hidden'
+  },
+  appFrame: {
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%'
+  },
+  content: {
+    width: '100%',
+    padding: 0,
+    flexGrow: 1,
+    position: 'relative',
+    backgroundColor: theme.palette.background.default,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    height: '100%',
+    overflowY: 'auto',
     boxSizing: 'border-box'
   },
-  widget: {
-    flex: '1 1 100%',
-    display: 'flex',
-    flexDirection: 'column'
+  'content-left': {
+    [theme.breakpoints.up('md')]: {
+      marginLeft: -menuWidth
+    }
   },
-  'widget-content': {
-    flex: '1 1 100%',
-    display: 'flex'
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
-  'table-cell': {
-    padding: '4px 24px 4px 24px'
+  'contentShift-left': {
+    marginLeft: 0
   }
 });
 

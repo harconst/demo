@@ -5,13 +5,13 @@ export const FETCHING_USERS_AND_POSTS_ERROR = 'FETCHING_USERS_AND_POSTS_ERROR';
 export const HANDLE_REQUEST_SORT = 'HANDLE_REQUEST_SORT';
 
 // All needed fetches combined in one action creator.
-export const fetchUsers = () => dispatch => {
+export const fetchUsers = () => (dispatch) => {
   dispatch({
     type: FETCHING_USERS_AND_POSTS
   });
 
   const users = fetch('http://jsonplaceholder.typicode.com/users')
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
@@ -20,7 +20,7 @@ export const fetchUsers = () => dispatch => {
     .then(response => response.json());
 
   const posts = fetch('http://jsonplaceholder.typicode.com/posts')
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
@@ -29,7 +29,7 @@ export const fetchUsers = () => dispatch => {
     .then(response => response.json());
 
   const comments = fetch('http://jsonplaceholder.typicode.com/comments')
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
@@ -38,7 +38,7 @@ export const fetchUsers = () => dispatch => {
     .then(response => response.json());
 
   Promise.all([users, posts, comments])
-    .then(values => {
+    .then((values) => {
       dispatch({
         type: FETCHING_USERS_AND_POSTS_SUCCESS,
         payload: values
@@ -51,7 +51,7 @@ export const fetchUsers = () => dispatch => {
     });
 };
 
-export const handleRequestSort = property => dispatch => {
+export const handleRequestSort = property => (dispatch) => {
   dispatch({
     type: HANDLE_REQUEST_SORT,
     payload: property

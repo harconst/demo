@@ -52,67 +52,67 @@ class Dashboard extends Component {
               <Paper className={classes['widget-content']}>
                 {!isFetching &&
                   users.length && (
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          {columnData.map(column => (
-                            <TableCell
-                              className={classes['table-cell']}
-                              key={column.id}
-                              numeric={column.numeric}
-                              padding={
-                                column.disablePadding ? 'none' : 'default'
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        {columnData.map(column => (
+                          <TableCell
+                            className={classes['table-cell']}
+                            key={column.id}
+                            numeric={column.numeric}
+                            padding={
+                              column.disablePadding ? 'none' : 'default'
+                            }
+                            sortDirection={
+                              orderBy === column.id ? order : false
+                            }
+                          >
+                            <Tooltip
+                              title="Sort"
+                              placement={
+                                column.numeric ? 'bottom-end' : 'bottom-start'
                               }
-                              sortDirection={
-                                orderBy === column.id ? order : false
-                              }
+                              enterDelay={300}
                             >
-                              <Tooltip
-                                title="Sort"
-                                placement={
-                                  column.numeric ? 'bottom-end' : 'bottom-start'
+                              <TableSortLabel
+                                active={orderBy === column.id}
+                                direction={order}
+                                onClick={() =>
+                                  this.props.handleRequestSort(column.id)
                                 }
-                                enterDelay={300}
                               >
-                                <TableSortLabel
-                                  active={orderBy === column.id}
-                                  direction={order}
-                                  onClick={() =>
-                                    this.props.handleRequestSort(column.id)
-                                  }
-                                >
-                                  {column.label}
-                                </TableSortLabel>
-                              </Tooltip>
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {users.map(user => (
-                          <TableRow key={user.id} hover>
-                            <TableCell className={classes['table-cell']}>
-                              <Link to={`/details/${user.id}`}>
-                                {user.name}
-                              </Link>
-                            </TableCell>
-                            <TableCell
-                              className={classes['table-cell']}
-                              numeric
-                            >
-                              {user.posts}
-                            </TableCell>
-                            <TableCell
-                              className={classes['table-cell']}
-                              numeric
-                            >
-                              {user.ratio}
-                            </TableCell>
-                          </TableRow>
+                                {column.label}
+                              </TableSortLabel>
+                            </Tooltip>
+                          </TableCell>
                         ))}
-                      </TableBody>
-                    </Table>
-                  )}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {users.map(user => (
+                        <TableRow key={user.id} hover>
+                          <TableCell className={classes['table-cell']}>
+                            <Link to={`/details/${user.id}`}>
+                              {user.name}
+                            </Link>
+                          </TableCell>
+                          <TableCell
+                            className={classes['table-cell']}
+                            numeric
+                          >
+                            {user.posts}
+                          </TableCell>
+                          <TableCell
+                            className={classes['table-cell']}
+                            numeric
+                          >
+                            {user.ratio}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
                 {isFetching && <LayoutLoader />}
               </Paper>
             </Grid>
