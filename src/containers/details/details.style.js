@@ -26,7 +26,12 @@ const styles = theme => ({
     }),
     height: '100%',
     overflowY: 'auto',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center'
   },
   'content-left': {
     [theme.breakpoints.up('md')]: {

@@ -58,7 +58,7 @@ class Details extends Component {
               [classes['contentShift-left']]: isWidthUp('md', width)
             })}
           >
-            {isFetchingComments && 'Loading'}
+            {isFetchingComments && <LayoutLoader />}
             {selectedPost && comments && comments.map(comment => (
               <Card
                 key={comment.id}
@@ -74,7 +74,7 @@ class Details extends Component {
                 </CardContent>
               </Card>
             ))}
-            {!selectedPost && !isFetchingComments && 'Please select a post'}
+            {!selectedPost && !isFetchingComments && <Typography variant="headline">Please select a post</Typography>}
           </main>
         </div>
       </div>
