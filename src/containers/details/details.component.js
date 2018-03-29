@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';
 import withWidth, { isWidthUp } from 'material-ui/utils/withWidth';
+import Card, { CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -17,35 +18,37 @@ import PostsList from './posts-list/posts-list.component';
 
 import LayoutLoader from '../../layouts/components/layout-loader/layout-loader.component';
 
-import { fetchUserPosts } from '../../actions/posts.actions';
+import { fetchUserPosts, fetchUserDetails, selectPost } from '../../actions/posts.actions';
 
 import styles from './details.style';
 
 class Details extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedPost: null
-    };
-  }
-
   componentDidMount() {
     this.props.fetchUserPosts(this.props.match.params.number);
+    this.props.fetchUserDetails(this.props.match.params.number);
   }
 
   selectPost = post => () => {
-    this.setState({ selectedPost: post });
+    this.props.selectPost(post);
   }
 
   render() {
     const { classes, postsState, width } = this.props;
-    const { posts, isFetchingPosts } = postsState;
+    const {
+      posts,
+      isFetchingPosts,
+      isFetchingComments,
+      isFetchingUser,
+      selectedPost,
+      comments,
+      user
+    } = postsState;
 
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <PostsList
-            selectedPost={this.state.selectedPost}
+            selectedPost={selectedPost}
             list={posts}
             onSelect={this.selectPost}
           />
@@ -55,8 +58,23 @@ class Details extends Component {
               [classes['contentShift-left']]: isWidthUp('md', width)
             })}
           >
-            {this.state.selectedPost ? 'lorem' : 'ipsium'
-            }
+            {isFetchingComments && 'Loading'}
+            {selectedPost && comments && comments.map(comment => (
+              <Card
+                key={comment.id}
+                classes={{
+                  root: classes.card
+                }}
+              >
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary">
+                    {comment.name}
+                  </Typography>
+                  <Typography component="div" dangerouslySetInnerHTML={{ __html: comment.body }} />
+                </CardContent>
+              </Card>
+            ))}
+            {!selectedPost && !isFetchingComments && 'Please select a post'}
           </main>
         </div>
       </div>
@@ -67,6 +85,8 @@ class Details extends Component {
 Details.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   fetchUserPosts: PropTypes.func.isRequired,
+  fetchUserDetails: PropTypes.func.isRequired,
+  selectPost: PropTypes.func.isRequired,
   postsState: PropTypes.shape({}).isRequired,
   width: PropTypes.string.isRequired,
   match: PropTypes.shape({
@@ -87,6 +107,8 @@ export default compose(
   withWidth(),
   withStyles(styles, { withTheme: true }),
   connect(mapStateToProps, {
-    fetchUserPosts
+    fetchUserPosts,
+    fetchUserDetails,
+    selectPost
   })
 )(Details);

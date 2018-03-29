@@ -41,6 +41,9 @@ const styles = theme => ({
   },
   'contentShift-left': {
     marginLeft: 0
+  },
+  card: {
+    margin: 16
   }
 });
 

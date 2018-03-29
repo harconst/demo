@@ -36,7 +36,7 @@ const PostsList = (props) => {
     >
       <div className={classNames(classes.drawerInner, 'util-hide-scrollbars')}>
         <List component="nav" className={classes.list}>
-          {list.map(post => ([
+          {list && list.map(post => ([
             <ListItem
               disableGutters
               title={post.title}
@@ -67,13 +67,14 @@ const PostsList = (props) => {
 };
 
 PostsList.defaultProps = {
-  selectedPost: null
+  selectedPost: null,
+  list: null
 };
 
 PostsList.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   selectedPost: PropTypes.shape({}),
-  list: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  list: PropTypes.arrayOf(PropTypes.shape({})),
   onSelect: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired
 };
