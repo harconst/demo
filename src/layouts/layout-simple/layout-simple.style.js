@@ -26,6 +26,9 @@ const styles = theme => ({
     minWidth: '100%',
     width: '100%',
     overflowY: 'auto'
+  },
+  avatar: {
+    marginRight: 5
   }
 });
 

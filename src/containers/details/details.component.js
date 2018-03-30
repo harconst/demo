@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
@@ -114,7 +113,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  // withRouter,
   withWidth(),
   withStyles(styles, { withTheme: true }),
   connect(mapStateToProps, {
