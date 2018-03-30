@@ -1,4 +1,4 @@
-const desktopMenuWidth = 300;
+const desktopMenuWidth = 400;
 
 const styles = theme => ({
   mobileMenuPaper: {

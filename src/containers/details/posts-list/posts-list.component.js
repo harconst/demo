@@ -7,7 +7,11 @@ import Drawer from 'material-ui/Drawer';
 import withWidth from 'material-ui/utils/withWidth';
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
+import PhoneIcon from 'material-ui-icons/Phone';
+import EmailIcon from 'material-ui-icons/Email';
+import LocationIcon from 'material-ui-icons/LocationOn';
+import FaceIcon from 'material-ui-icons/Face';
 
 
 import themeStyles from './posts-list.style';
@@ -17,6 +21,7 @@ const PostsList = (props) => {
     classes,
     selectedPost,
     list,
+    user,
     width,
     onSelect
   } = props;
@@ -35,6 +40,37 @@ const PostsList = (props) => {
       }}
     >
       <div className={classNames(classes.drawerInner, 'util-hide-scrollbars')}>
+        {user &&
+          <div>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <FaceIcon />
+                </ListItemIcon>
+                <ListItemText primary={user[0].name} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <EmailIcon />
+                </ListItemIcon>
+                <ListItemText primary={user[0].email} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <PhoneIcon />
+                </ListItemIcon>
+                <ListItemText primary={user[0].phone} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <LocationIcon />
+                </ListItemIcon>
+                <ListItemText primary={user[0].address.city} />
+              </ListItem>
+            </List>
+            <Divider />
+          </div>
+        }
         <List component="nav" className={classes.list}>
           {list && list.map(post => ([
             <ListItem
@@ -68,7 +104,8 @@ const PostsList = (props) => {
 
 PostsList.defaultProps = {
   selectedPost: null,
-  list: null
+  list: null,
+  user: null
 };
 
 PostsList.propTypes = {
@@ -76,7 +113,8 @@ PostsList.propTypes = {
   selectedPost: PropTypes.shape({}),
   list: PropTypes.arrayOf(PropTypes.shape({})),
   onSelect: PropTypes.func.isRequired,
-  width: PropTypes.string.isRequired
+  width: PropTypes.string.isRequired,
+  user: PropTypes.arrayOf(PropTypes.shape({}))
 };
 
 export default compose(withWidth(), withStyles(themeStyles, { withTheme: true }))(PostsList);

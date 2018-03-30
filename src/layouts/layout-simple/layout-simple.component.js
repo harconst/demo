@@ -25,23 +25,6 @@ class SimpleLayout extends React.Component {
     // props.setSidenavOpen(variant === 'persistent');
   }
 
-  // Update the layout state when a going from mobile to desktop and vice versa
-  // componentWillReceiveProps(nextProps) {
-  //   if (
-  //     isWidthDown('sm', this.props.width) &&
-  //     isWidthUp('md', nextProps.width)
-  //   ) {
-  //     this.props.toggleSidenavVariant('persistent');
-  //     this.props.setSidenavOpen(true);
-  //   } else if (
-  //     isWidthDown('sm', nextProps.width) &&
-  //     isWidthUp('md', this.props.width)
-  //   ) {
-  //     this.props.toggleSidenavVariant('temporary');
-  //     this.props.setSidenavOpen(false);
-  //   }
-  // }
-
   render() {
     const { children, classes, location } = this.props;
 

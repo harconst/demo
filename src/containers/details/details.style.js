@@ -1,4 +1,4 @@
-const menuWidth = 300;
+const menuWidth = 400;
 
 const styles = theme => ({
   root: {
@@ -47,7 +47,7 @@ const styles = theme => ({
     marginLeft: 0
   },
   card: {
-    margin: 16
+    margin: 8
   },
   centered: {
     justifyContent: 'center',

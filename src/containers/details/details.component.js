@@ -8,11 +8,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import withWidth, { isWidthUp } from 'material-ui/utils/withWidth';
 import Card, { CardContent } from 'material-ui/Card';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import AddCircleIcon from 'material-ui-icons/AddCircle';
 import Button from 'material-ui/Button';
 import ListIcon from 'material-ui-icons/List';
 import Hidden from 'material-ui/Hidden';
@@ -39,9 +35,7 @@ class Details extends Component {
     const { classes, postsState, width } = this.props;
     const {
       posts,
-      isFetchingPosts,
       isFetchingComments,
-      isFetchingUser,
       selectedPost,
       comments,
       user
@@ -51,6 +45,7 @@ class Details extends Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <PostsList
+            user={user}
             selectedPost={selectedPost}
             list={posts}
             onSelect={this.selectPost}
