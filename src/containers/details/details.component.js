@@ -13,12 +13,15 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import AddCircleIcon from 'material-ui-icons/AddCircle';
+import Button from 'material-ui/Button';
+import ListIcon from 'material-ui-icons/List';
+import Hidden from 'material-ui/Hidden';
 
 import PostsList from './posts-list/posts-list.component';
 
 import LayoutLoader from '../../layouts/components/layout-loader/layout-loader.component';
 
-import { fetchUserPosts, fetchUserDetails, selectPost } from '../../actions/posts.actions';
+import { fetchUserPosts, fetchUserDetails, selectPost, backToList } from '../../actions/posts.actions';
 
 import styles from './details.style';
 
@@ -58,7 +61,7 @@ class Details extends Component {
               [classes['contentShift-left']]: isWidthUp('md', width)
             })}
           >
-            {isFetchingComments && <LayoutLoader />}
+            {isFetchingComments && <div className={classes.centered}><LayoutLoader /></div>}
             {selectedPost && comments && comments.map(comment => (
               <Card
                 key={comment.id}
@@ -74,7 +77,19 @@ class Details extends Component {
                 </CardContent>
               </Card>
             ))}
-            {!selectedPost && !isFetchingComments && <Typography variant="headline">Please select a post</Typography>}
+            {selectedPost &&
+              <Hidden mdUp>
+                <Button
+                  variant="fab"
+                  color="secondary"
+                  aria-label="compose"
+                  className={classes['back-fab']}
+                  onClick={() => this.props.backToList()}
+                >
+                  <ListIcon className={classes['portal-note-cancel-fab__icon']} />
+                </Button>
+              </Hidden>}
+            {!selectedPost && !isFetchingComments && <div className={classes.centered}><Typography variant="headline">Please select a post</Typography></div>}
           </main>
         </div>
       </div>
@@ -87,6 +102,7 @@ Details.propTypes = {
   fetchUserPosts: PropTypes.func.isRequired,
   fetchUserDetails: PropTypes.func.isRequired,
   selectPost: PropTypes.func.isRequired,
+  backToList: PropTypes.func.isRequired,
   postsState: PropTypes.shape({}).isRequired,
   width: PropTypes.string.isRequired,
   match: PropTypes.shape({
@@ -109,6 +125,7 @@ export default compose(
   connect(mapStateToProps, {
     fetchUserPosts,
     fetchUserDetails,
-    selectPost
+    selectPost,
+    backToList
   })
 )(Details);

@@ -91,3 +91,10 @@ export const fetchUserDetails = id => (dispatch) => {
       });
     });
 };
+
+export const backToList = () => (dispatch) => {
+  dispatch({
+    type: SET_SELECTED_POST,
+    payload: null
+  });
+};

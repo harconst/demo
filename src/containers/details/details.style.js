@@ -28,7 +28,6 @@ const styles = theme => ({
     overflowY: 'auto',
     boxSizing: 'border-box',
     alignItems: 'stretch',
-    justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center'
@@ -49,6 +48,18 @@ const styles = theme => ({
   },
   card: {
     margin: 16
+  },
+  centered: {
+    justifyContent: 'center',
+    display: 'flex',
+    height: '100%',
+    alignItems: 'center'
+  },
+  'back-fab': {
+    position: 'fixed',
+    bottom: 74,
+    left: 16,
+    zIndex: 1200
   }
 });
 
